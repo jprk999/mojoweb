@@ -32,12 +32,6 @@ class FacebookController extends Controller
             } else {
                 return redirect()->route('login')->with('error', 'Failed to retrieve Facebook pages.');
             }
-
-            
-            // \Log::info('User Information: '.$user);
-            // Redirect to desired route'
-            print_r($user);exit;
-            return redirect()->route('dashboard');
         } catch (\Exception $e) {
             \Log::error('Facebook Login Error: ' . $e->getMessage(), ['exception' => $e]);
             return redirect()->route('login')->withErrors('Failed to authenticate with Facebook.');
