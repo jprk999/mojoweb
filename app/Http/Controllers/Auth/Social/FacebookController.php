@@ -14,9 +14,7 @@ class FacebookController extends Controller
 {
     public function facebookRedirect()
     {
-        $redirectUrl = Socialite::driver('facebook')->stateless()->usingGraphVersion('v20.0')->redirect()->getTargetUrl();
-        \Log::info('Facebook Redirect URL: ' . $redirectUrl);
-        return Socialite::driver('facebook')->with(['redirect_uri' => "https://localhost/auth/facebook/callback/", 'config_id' => '1063495474617185'])->usingGraphVersion('v20.0')->stateless()->scopes(['email', 'pages_show_list', 'pages_read_engagement'])->redirect();
+        return Socialite::driver('facebook')->with(['redirect_uri' => "https://localhost/auth/facebook/callback/", 'config_id' => '1063495474617185'])->usingGraphVersion('v20.0')->stateless()->redirect();
     }
 
     public function facebookCallback()
@@ -54,7 +52,6 @@ class FacebookController extends Controller
         $response = Http::withToken($token)->get("https://graph.facebook.com/v20.0/{$pageId}/insights", [
             'metric' => 'page_fans,page_post_engagements,page_impressions,page_actions_post_reactions_total'
         ]);
-        // print_r($response);exit;
         return response()->json($response->json());
     }
 
